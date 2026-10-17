@@ -1,0 +1,12 @@
+{
+  "name": "CourseLog",
+  "short_name": "CourseLog",
+  "description": "산책·러닝 코스를 기록하고 공유해요",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

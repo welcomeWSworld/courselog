@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CourseLog">
+  <title>CourseLog</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="map"></div>
+
+  <button id="btn-locate" class="fab" aria-label="내 위치로">
+    <svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="3.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+  </button>
+
+  <!-- 홈: 모드 선택 + 시작 -->
+  <section id="view-home" class="sheet">
+    <div class="brand">CourseLog <span>코스를 기록하고 공유해요</span></div>
+    <div class="mode-toggle" role="radiogroup" aria-label="운동 종류">
+      <button class="mode active" data-mode="walk" role="radio" aria-checked="true">🚶 걷기</button>
+      <button class="mode" data-mode="run" role="radio" aria-checked="false">🏃 뛰기</button>
+    </div>
+    <button id="btn-start" class="primary big">시작</button>
+    <div class="row">
+      <button id="btn-history" class="ghost">내 기록</button>
+    </div>
+    <p id="gps-hint" class="hint">시작하면 위치 권한을 요청해요.</p>
+  </section>
+
+  <!-- 기록 중 -->
+  <section id="view-track" class="sheet hidden">
+    <div class="status-line"><span id="gps-badge" class="badge">GPS 찾는 중</span><span id="wake-badge" class="badge muted"></span></div>
+    <div class="stats">
+      <div><b id="s-time">00:00</b><small>시간</small></div>
+      <div><b id="s-dist">0.00</b><small>km</small></div>
+      <div><b id="s-pace">-'--"</b><small>평균 페이스</small></div>
+    </div>
+    <div class="row">
+      <button id="btn-pause" class="secondary">일시정지</button>
+      <button id="btn-stop" class="danger">종료</button>
+    </div>
+    <p class="hint">화면을 끄거나 다른 앱으로 가면 기록이 멈출 수 있어요. 화면을 켜둔 채로 사용해 주세요.</p>
+  </section>
+
+  <!-- 결과 / 공유받은 코스 -->
+  <section id="view-result" class="sheet hidden">
+    <div class="result-head">
+      <div>
+        <div id="r-title" class="r-title">오늘의 코스</div>
+        <div id="r-date" class="r-date"></div>
+      </div>
+      <button id="btn-close-result" class="icon" aria-label="닫기">✕</button>
+    </div>
+    <div class="stats">
+      <div><b id="r-dist">0.00</b><small>km</small></div>
+      <div><b id="r-time">00:00</b><small>시간</small></div>
+      <div><b id="r-pace">-'--"</b><small>평균 페이스</small></div>
+    </div>
+    <div class="row" id="result-actions">
+      <button id="btn-share-link" class="primary">링크 공유</button>
+      <button id="btn-share-image" class="secondary">이미지</button>
+      <button id="btn-gpx" class="secondary">GPX</button>
+    </div>
+    <div class="row hidden" id="shared-actions">
+      <button id="btn-save-shared" class="primary">내 기록에 저장</button>
+      <button id="btn-go-home" class="secondary">나도 기록하기</button>
+    </div>
+  </section>
+
+  <!-- 기록 목록 -->
+  <section id="view-history" class="sheet tall hidden">
+    <div class="result-head">
+      <div class="r-title">내 기록</div>
+      <button id="btn-close-history" class="icon" aria-label="닫기">✕</button>
+    </div>
+    <ul id="history-list"></ul>
+  </section>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="geo.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
